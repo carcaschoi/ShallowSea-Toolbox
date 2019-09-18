@@ -12,7 +12,7 @@
 #define ROOT                "/"
 #define APP_PATH            "/switch/sigpatch-updater/"
 #define SIGS_OUTPUT         "/switch/sigpatch-updater/sigpatches.zip"
-#define APP_OUTPUT          "/switch/sigpatch-updater/sigpatches-updater.nro"
+#define APP_OUTPUT          "/switch/sigpatch-updater/sigpatch-updater.nro"
 #define OLD_APP_PATH        "/switch/sigpatch-updater.nro"
 
 #define APP_VERSION         "0.1.0"
