@@ -37,9 +37,9 @@ include $(DEVKITPRO)/libnx/switch_rules
 #   of a homebrew executable (.nro). This is intended to be used for sysmodules.
 #   NACP building is skipped as well.
 #---------------------------------------------------------------------------------
-APP_TITLE   := Sigpatch-Updater
-APP_AUTHOR  := TotalJustice
-APP_VERSION := 0.1.0
+APP_TITLE   := 	Sigpatch-Updater
+APP_AUTHOR  := 	TotalJustice
+APP_VERSION := 	0.1.0
 
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
@@ -63,8 +63,7 @@ CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:=  -lSDL2_ttf -lSDL2_image -lwebp -lpng -lturbojpeg -lSDL2 -lSDL2_gfx `sdl2-config --libs` `freetype-config --libs` \
-			-lcurl -lmbedtls -lmbedx509 -lmbedcrypto -lminizip -lz -lnx
+LIBS	:=  -lcurl -lmbedtls -lmbedx509 -lmbedcrypto -lminizip -lz -lnx
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing

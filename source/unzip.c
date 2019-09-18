@@ -6,7 +6,7 @@
 
 #include "unzip.h"
 
-#define WRITEBUFFERSIZE 5000 // 5KB
+#define WRITEBUFFERSIZE 1000 // 1KB
 #define MAXFILENAME     256
 
 int unzip(const char *output)
@@ -60,7 +60,8 @@ int unzip(const char *output)
 
     unzClose(zfile);
     remove(output);
-    printf("\nfinished!\n");
+    
+    printf("\nfinished!\n\nRemember to reboot for the patches to be loaded!\n");
     consoleUpdate(NULL);
 
     return 0;

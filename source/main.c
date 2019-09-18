@@ -2,13 +2,12 @@
 #include <string.h>
 #include <unistd.h>
 #include <dirent.h>
-#include <stdbool.h>
 #include <switch.h>
 
 #include "download.h"
 #include "unzip.h"
 
-//#define DEBUG           // enable for nxlink debug
+//#define DEBUG               // enable for nxlink debug
 
 #define ROOT                "/"
 #define APP_PATH            "/switch/sigpatch-updater/"
@@ -18,7 +17,6 @@
 
 #define APP_VERSION         "0.1.0"
 #define CURSOR_LIST_MAX     1
-#define MAX_STRLEN          512
 
 void refreshScreen(int cursor)
 {
