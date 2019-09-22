@@ -39,7 +39,7 @@ include $(DEVKITPRO)/libnx/switch_rules
 #---------------------------------------------------------------------------------
 APP_TITLE   := 	Sigpatch-Updater
 APP_AUTHOR  := 	TotalJustice
-APP_VERSION := 	0.1.0
+APP_VERSION := 	0.1.1
 
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
