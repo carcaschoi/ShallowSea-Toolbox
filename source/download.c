@@ -59,7 +59,7 @@ int download_progress(void *p, double dltotal, double dlnow, double ultotal, dou
 	return 0;
 }
 
-int downloadFile(const char *url, const char *output)
+int downloadFile(const char *url, const char *output, int api)
 {
     CURL *curl = curl_easy_init();
     if (curl)
@@ -83,8 +83,11 @@ int downloadFile(const char *url, const char *output)
             curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
             curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&chunk);
 
-            curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L);
-            curl_easy_setopt(curl, CURLOPT_PROGRESSFUNCTION, download_progress);
+            if (api == OFF)
+            {
+              curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L);
+              curl_easy_setopt(curl, CURLOPT_PROGRESSFUNCTION, download_progress);
+            }
 
             // execute curl, save result
             CURLcode res = curl_easy_perform(curl);

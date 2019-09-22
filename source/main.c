@@ -2,6 +2,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <dirent.h>
+
 #include <switch.h>
 
 #include "download.h"
@@ -12,11 +13,52 @@
 #define ROOT                "/"
 #define APP_PATH            "/switch/sigpatch-updater/"
 #define SIGS_OUTPUT         "/switch/sigpatch-updater/sigpatches.zip"
+#define JOON_SIGS_OUTPUT    "/switch/sigpatch-updater/kosmos.7z"
 #define APP_OUTPUT          "/switch/sigpatch-updater/sigpatch-updater.nro"
 #define OLD_APP_PATH        "/switch/sigpatch-updater.nro"
 
-#define APP_VERSION         "0.1.0"
+#define APP_VERSION         "0.1.1"
 #define CURSOR_LIST_MAX     1
+
+#define FILTER_STRING       "attachments/"
+
+
+int parseSearch(char *parse_string, char *filter, char* new_string)
+{
+    FILE *fp = fopen(parse_string, "r");
+    
+    if (fp)
+    {
+        char c;
+        while ((c = fgetc(fp)) != EOF)
+        {
+            if (c == *filter)
+            {
+                for (int i = 0, len = strlen(filter) - 1; c == filter[i]; i++)
+                {
+                    c = fgetc(fp);
+                    if (i == len)
+                    {
+                        for (int j = 0; c != '\"'; j++)
+                        {
+                            new_string[j] = c;
+                            new_string[j+1] = '\0';
+                            c = fgetc(fp);
+                        }
+                        fclose(fp);
+                        remove(parse_string);
+                        return 0;
+                    }
+                }
+            }
+        }
+    }
+
+    printf("Failed to parse...\n");
+    consoleUpdate(NULL);
+    fclose(fp);
+    return 1;
+}
 
 void refreshScreen(int cursor)
 {
@@ -94,12 +136,24 @@ int main(int argc, char **argv)
             switch (cursor)
             {
             case UP_SIGS:
-                if (!downloadFile(SIGS_URL, SIGS_OUTPUT))
-                    unzip(SIGS_OUTPUT);
+                if (!downloadFile(SIGS_URL, TEMP_FILE, ON))
+                {
+                    // get the new attatchment file name, store it in file_name.
+                    char file_name[128];
+                    if (!parseSearch(TEMP_FILE, FILTER_STRING, file_name))
+                    {
+                        // concatenate the gbatemp url and new attatchment name, store in new_url.
+                        char new_url[256];
+                        if (snprintf(new_url, sizeof(new_url), "%s%s", GBATEMP_URL, file_name))
+                            // download from the concatenated url. Hacky, but it works(tm).
+                            if (!downloadFile(new_url, SIGS_OUTPUT, OFF))
+                                unzip(SIGS_OUTPUT);
+                    }
+                }
                 break;
 
             case UP_APP:
-                if (!downloadFile(APP_URL, APP_OUTPUT))
+                if (!downloadFile(APP_URL, APP_OUTPUT, OFF))
                 {
                     FILE *f = fopen(OLD_APP_PATH, "r");
                     if (f) 
@@ -118,6 +172,5 @@ int main(int argc, char **argv)
 
     // cleanup then exit
     appExit();
-
     return 0;
 }
