@@ -166,8 +166,11 @@ int main(int argc, char **argv)
                 break;
 
             case UP_APP:
-                if (!downloadFile(APP_URL, APP_OUTPUT, OFF))
+                if (!downloadFile(APP_URL, TEMP_FILE, OFF))
+                {
+                    rename(TEMP_FILE, APP_OUTPUT);
                     remove(OLD_APP_PATH);
+                }
                 break;
             }
         }
