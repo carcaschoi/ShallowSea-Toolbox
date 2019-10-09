@@ -10,17 +10,18 @@
 
 //#define DEBUG               // enable for nxlink debug
 
-#define ROOT                "/"
-#define APP_PATH            "/switch/sigpatch-updater/"
-#define SIGS_OUTPUT         "/switch/sigpatch-updater/sigpatches.zip"
-#define JOON_SIGS_OUTPUT    "/switch/sigpatch-updater/kosmos.7z"
-#define APP_OUTPUT          "/switch/sigpatch-updater/sigpatch-updater.nro"
-#define OLD_APP_PATH        "/switch/sigpatch-updater.nro"
+#define ROOT                    "/"
+#define APP_PATH                "/switch/sigpatch-updater/"
+#define SIGS_OUTPUT             "/switch/sigpatch-updater/sigpatches.zip"
+#define JOON_SIGS_OUTPUT        "/switch/sigpatch-updater/kosmos.7z"
+#define APP_OUTPUT              "/switch/sigpatch-updater/sigpatch-updater.nro"
+#define OLD_APP_PATH            "/switch/sigpatch-updater.nro"
 
-#define APP_VERSION         "0.1.1"
-#define CURSOR_LIST_MAX     1
+#define APP_VERSION             "0.1.2"
+#define CURSOR_LIST_MAX         2
 
-#define FILTER_STRING       "attachments/"
+#define GBATEMP_FILTER_STRING   "attachments/"
+#define GITHUB_FILTER_STRING    "browser_download_url\":\""
 
 
 int parseSearch(char *parse_string, char *filter, char* new_string)
@@ -64,7 +65,9 @@ void refreshScreen(int cursor)
 {
     consoleClear();
 
-    char *option_list[] = { "= Update Sigpatches", "= Update this app" };
+    char *option_list[] = { "= Update Sigpatches (For Atmosphere Users)", \
+                            "= Update Sigpatches (For Hekate / Kosmos Users)", \
+                            "= Update this app" };
 
     printf("\x1B[36mSigpatch-Updater: v%s.\x1B[37m\n\n\n", APP_VERSION);
     printf("Press (A) to select option\n\n");
@@ -140,7 +143,7 @@ int main(int argc, char **argv)
                 {
                     // get the new attatchment file name, store it in file_name.
                     char file_name[128];
-                    if (!parseSearch(TEMP_FILE, FILTER_STRING, file_name))
+                    if (!parseSearch(TEMP_FILE, GBATEMP_FILTER_STRING, file_name))
                     {
                         // concatenate the gbatemp url and new attatchment name, store in new_url.
                         char new_url[256];
@@ -152,16 +155,19 @@ int main(int argc, char **argv)
                 }
                 break;
 
+            case UP_JOONIE:
+                if (!downloadFile(JOON_SIGS_URL, TEMP_FILE, ON))
+                {
+                    char new_url[128];
+                    if (!parseSearch(TEMP_FILE, GITHUB_FILTER_STRING, new_url))
+                        if (!downloadFile(new_url, SIGS_OUTPUT, OFF))
+                            unzip(SIGS_OUTPUT);
+                }
+                break;
+
             case UP_APP:
                 if (!downloadFile(APP_URL, APP_OUTPUT, OFF))
-                {
-                    FILE *f = fopen(OLD_APP_PATH, "r");
-                    if (f) 
-                    {
-                        fclose(f);
-                        remove(OLD_APP_PATH);
-                    }
-                }
+                    remove(OLD_APP_PATH);
                 break;
             }
         }
