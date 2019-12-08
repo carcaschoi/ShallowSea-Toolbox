@@ -13,7 +13,7 @@
 #define ROOT                    "/"
 #define APP_PATH                "/switch/sigpatch-updater/"
 #define SIGS_OUTPUT             "/switch/sigpatch-updater/sigpatches.zip"
-#define JOON_SIGS_OUTPUT        "/switch/sigpatch-updater/kosmos.7z"
+#define JOON_SIGS_OUTPUT        "/switch/sigpatch-updater/kosmos.zip"
 #define APP_OUTPUT              "/switch/sigpatch-updater/sigpatch-updater.nro"
 #define OLD_APP_PATH            "/switch/sigpatch-updater.nro"
 
@@ -21,7 +21,7 @@
 #define CURSOR_LIST_MAX         2
 
 #define GBATEMP_FILTER_STRING   "attachments/"
-#define GITHUB_FILTER_STRING    "browser_download_url\":\""
+#define GITHUB_FILTER_STRING    "browser_download_url\":\"https://github.com/Joonie86/hekate/releases/download/5.0.0J/Kosmos_patches"
 
 
 int parseSearch(char *parse_string, char *filter, char* new_string)
@@ -142,11 +142,11 @@ int main(int argc, char **argv)
                 if (!downloadFile(SIGS_URL, TEMP_FILE, ON))
                 {
                     // get the new attatchment file name, store it in file_name.
-                    char file_name[128];
+                    char file_name[0x80];
                     if (!parseSearch(TEMP_FILE, GBATEMP_FILTER_STRING, file_name))
                     {
                         // concatenate the gbatemp url and new attatchment name, store in new_url.
-                        char new_url[256];
+                        char new_url[0x100];
                         if (snprintf(new_url, sizeof(new_url), "%s%s", GBATEMP_URL, file_name))
                             // download from the concatenated url. Hacky, but it works(tm).
                             if (!downloadFile(new_url, SIGS_OUTPUT, OFF))
@@ -158,10 +158,14 @@ int main(int argc, char **argv)
             case UP_JOONIE:
                 if (!downloadFile(JOON_SIGS_URL, TEMP_FILE, ON))
                 {
-                    char new_url[128];
+                    char new_url[0x80];
                     if (!parseSearch(TEMP_FILE, GITHUB_FILTER_STRING, new_url))
-                        if (!downloadFile(new_url, SIGS_OUTPUT, OFF))
-                            unzip(SIGS_OUTPUT);
+                    {
+                        char full_url[0x100];
+                        if (snprintf(full_url, 0x100, "%s%s", JOON_HACKY_SIG, new_url))
+                            if (!downloadFile(full_url, SIGS_OUTPUT, OFF))
+                                unzip(SIGS_OUTPUT);
+                    }
                 }
                 break;
 
