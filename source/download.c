@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -10,56 +11,57 @@
 #include "download.h"
 
 #define API_AGENT           "ITotalJustice"
-#define MEGABYTES_IN_BYTES	1048576
+#define _1MiB   0x100000
 
-struct MemoryStruct
+typedef struct
 {
-  char *memory;
-  size_t size;
-};
+    char *memory;
+    size_t size;
+} MemoryStruct_t;
 
-static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userdata)
+typedef struct
 {
-  size_t realsize = size * nmemb;
-  struct MemoryStruct *mem = (struct MemoryStruct *)userdata;
+    u_int8_t *data;
+    size_t data_size;
+    u_int64_t offset;
+    FILE *out;
+} ntwrk_struct_t;
 
-  char *ptr = realloc(mem->memory, mem->size + realsize + 1);
-  if (ptr == NULL) return 0;
- 
-  mem->memory = ptr;
-  memcpy(&(mem->memory[mem->size]), contents, realsize);
-  mem->size += realsize;
-  mem->memory[mem->size] = 0;
- 
-  return realsize;
+static size_t WriteMemoryCallback(void *contents, size_t size, size_t num_files, void *userp)
+{
+    ntwrk_struct_t *data_struct = (ntwrk_struct_t *)userp;
+    size_t realsize = size * num_files;
+
+    if (realsize + data_struct->offset >= data_struct->data_size)
+    {
+        fwrite(data_struct->data, data_struct->offset, 1, data_struct->out);
+        data_struct->offset = 0;
+    }
+
+    memcpy(&data_struct->data[data_struct->offset], contents, realsize);
+    data_struct->offset += realsize;
+    data_struct->data[data_struct->offset] = 0;
+    return realsize;
 }
 
 int download_progress(void *p, double dltotal, double dlnow, double ultotal, double ulnow)
 {
     if (dltotal <= 0.0) return 0;
 
-    struct timeval tv;
+    struct timeval tv = {0};
     gettimeofday(&tv, NULL);
     int counter = round(tv.tv_usec / 100000);
 
     if (counter == 0 || counter == 2 || counter == 4 || counter == 6 || counter == 8)
     {
-      printf("* DOWNLOADING: %.2fMB of %.2fMB *\r", dlnow / MEGABYTES_IN_BYTES, dltotal / MEGABYTES_IN_BYTES);
-	
-      struct timeval tv;
-      gettimeofday(&tv, NULL);
-      int counter = round(tv.tv_usec / 100000);
-
-      if (counter == 0 || counter == 2 || counter == 4 || counter == 6 || counter == 8)
-      {
-          consoleUpdate(NULL);
-      }
+        printf("* DOWNLOADING: %.2fMB of %.2fMB *\r", dlnow / _1MiB, dltotal / _1MiB);
+        consoleUpdate(NULL);
     }
 
-	return 0;
+    return 0;
 }
 
-int downloadFile(const char *url, const char *output, int api)
+bool downloadFile(const char *url, const char *output, int api)
 {
     CURL *curl = curl_easy_init();
     if (curl)
@@ -69,9 +71,10 @@ int downloadFile(const char *url, const char *output, int api)
         {
             printf("\n");
 
-            struct MemoryStruct chunk;
-            chunk.memory = malloc(1);
-            chunk.size = 0;
+            ntwrk_struct_t chunk = {0};
+            chunk.data = malloc(_1MiB);
+            chunk.data_size = _1MiB;
+            chunk.out = fp;
 
             curl_easy_setopt(curl, CURLOPT_URL, url);
             curl_easy_setopt(curl, CURLOPT_USERAGENT, API_AGENT);
@@ -81,7 +84,7 @@ int downloadFile(const char *url, const char *output, int api)
 
             // write calls
             curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
-            curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&chunk);
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, &chunk);
 
             if (api == OFF)
             {
@@ -93,24 +96,24 @@ int downloadFile(const char *url, const char *output, int api)
             CURLcode res = curl_easy_perform(curl);
 
             // write from mem to file
-            fwrite(chunk.memory, 1, chunk.size, fp);
+            if (chunk.offset)
+              fwrite(chunk.data, 1, chunk.offset, fp);
 
             // clean
             curl_easy_cleanup(curl);
-            free(chunk.memory);
-            fclose(fp);
+            free(chunk.data);
+            fclose(chunk.out);
 
             if (res == CURLE_OK)
             {
-              printf("\n\ndownload complete!\n\n");
-              consoleUpdate(NULL);
-              return 0;
+                printf("\n\ndownload complete!\n\n");
+                consoleUpdate(NULL);
+                return true;
             }
         }
-        fclose(fp);
     }
     
     printf("\n\ndownload failed...\n\n");
     consoleUpdate(NULL);
-    return 1;
+    return false;
 }

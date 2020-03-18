@@ -1,4 +1,4 @@
-## Sigpatch-Updater
+# Sigpatch-Updater
 
 This is a updater for you sigpatches! Currently it has the option to:
 
@@ -10,7 +10,9 @@ This is a updater for you sigpatches! Currently it has the option to:
 
 ----
 
-# Where does it download the patches from?
+#= Where does it download the patches from?
+
+The patches are download from my [patches repo](https://github.com/ITotalJustice/patches). These are automatically updated from the sources below.
 
 The Atmosphere patches are downloaded from [this gbatemp thread](https://gbatemp.net/threads/i-heard-that-you-guys-need-some-sweet-patches-for-atmosphere.521164/) which has proven to be the most trusted source for patches.
 
@@ -18,7 +20,7 @@ The Hekate / Kosmos patches are downloaded from the [latest github release from 
 
 ----
 
-# Special Thanks!
+## Special Thanks!
 
 [toph](https://github.com/sudot0ph) for the design of the app icon!
 
@@ -28,7 +30,7 @@ Joonie for the continuing to update the hekate patches!
 
 ----
 
-# Patreon
+## Patreon
 
 Feel free to support me on patreon, I would really appreciate it!
 

@@ -6,20 +6,19 @@
 
 #include "unzip.h"
 
-#define WRITEBUFFERSIZE 1000 // 1KB
-#define MAXFILENAME     256
+#define WRITEBUFFERSIZE 0x1000 // 4KiB
+#define MAXFILENAME     0x301
 
 int unzip(const char *output)
 {
     unzFile zfile = unzOpen(output);
-    unz_global_info gi;
+    unz_global_info gi = {0};
     unzGetGlobalInfo(zfile, &gi);
 
     for (int i = 0; i < gi.number_entry; i++)
     {
-
-        char filename_inzip[MAXFILENAME];
-        unz_file_info file_info;
+        char filename_inzip[MAXFILENAME] = {0};
+        unz_file_info file_info = {0};
 
         unzOpenCurrentFile(zfile);
         unzGetCurrentFileInfo(zfile, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0);

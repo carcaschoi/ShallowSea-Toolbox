@@ -1,83 +1,49 @@
 #include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <dirent.h>
-
+#include <stdarg.h>
+#include <unistd.h> // chdir
+#include <dirent.h> // mkdir
 #include <switch.h>
 
 #include "download.h"
 #include "unzip.h"
 
-//#define DEBUG               // enable for nxlink debug
 
 #define ROOT                    "/"
 #define APP_PATH                "/switch/sigpatch-updater/"
-#define SIGS_OUTPUT             "/switch/sigpatch-updater/sigpatches.zip"
-#define JOON_SIGS_OUTPUT        "/switch/sigpatch-updater/kosmos.zip"
 #define APP_OUTPUT              "/switch/sigpatch-updater/sigpatch-updater.nro"
 #define OLD_APP_PATH            "/switch/sigpatch-updater.nro"
 
-#define APP_VERSION             "0.1.2"
+#define APP_VERSION             "0.1.3"
 #define CURSOR_LIST_MAX         2
 
-#define GBATEMP_FILTER_STRING   "attachments/"
-#define GITHUB_FILTER_STRING    "browser_download_url\":\"https://github.com/Joonie86/hekate/releases/download/5.0.0J/Kosmos_patches"
 
-
-int parseSearch(char *parse_string, char *filter, char* new_string)
+const char *OPTION_LIST[] =
 {
-    FILE *fp = fopen(parse_string, "r");
-    
-    if (fp)
-    {
-        char c;
-        while ((c = fgetc(fp)) != EOF)
-        {
-            if (c == *filter)
-            {
-                for (int i = 0, len = strlen(filter) - 1; c == filter[i]; i++)
-                {
-                    c = fgetc(fp);
-                    if (i == len)
-                    {
-                        for (int j = 0; c != '\"'; j++)
-                        {
-                            new_string[j] = c;
-                            new_string[j+1] = '\0';
-                            c = fgetc(fp);
-                        }
-                        fclose(fp);
-                        remove(parse_string);
-                        return 0;
-                    }
-                }
-            }
-        }
-    }
-
-    printf("Failed to parse...\n");
-    consoleUpdate(NULL);
-    fclose(fp);
-    return 1;
-}
+    "= Update Sigpatches (For Atmosphere Users)",
+    "= Update Sigpatches (For Hekate / Kosmos Users)",
+    "= Update this app"
+};
 
 void refreshScreen(int cursor)
 {
     consoleClear();
 
-    char *option_list[] = { "= Update Sigpatches (For Atmosphere Users)", \
-                            "= Update Sigpatches (For Hekate / Kosmos Users)", \
-                            "= Update this app" };
-
     printf("\x1B[36mSigpatch-Updater: v%s.\x1B[37m\n\n\n", APP_VERSION);
     printf("Press (A) to select option\n\n");
     printf("Press (+) to exit\n\n\n");
 
-    for (int i = 0; i < (CURSOR_LIST_MAX+1); i++)
-    {
-        if (cursor != i) printf("[ ] %s\n\n", option_list[i]);
-        else printf("[X] %s\n\n", option_list[i]);
-    }
+    for (int i = 0; i < CURSOR_LIST_MAX + 1; i++)
+        printf("[%c] %s\n\n", cursor == i ? 'X' : ' ', OPTION_LIST[i]);
+
+    consoleUpdate(NULL);
+}
+
+void printDisplay(const char *text, ...)
+{
+    va_list v;
+    va_start(v, text);
+    vfprintf(stdout, text, v);
+    va_end(v);
     consoleUpdate(NULL);
 }
 
@@ -85,9 +51,6 @@ int appInit()
 {
     consoleInit(NULL);
     socketInitializeDefault();
-    #ifdef DEBUG
-    nxlinkStdio();
-    #endif
     return 0;
 }
 
@@ -139,41 +102,33 @@ int main(int argc, char **argv)
             switch (cursor)
             {
             case UP_SIGS:
-                if (!downloadFile(SIGS_URL, TEMP_FILE, ON))
+                if (downloadFile(AMS_SIG_URL, TEMP_FILE, OFF))
+                    unzip(TEMP_FILE);
+                else
                 {
-                    // get the new attatchment file name, store it in file_name.
-                    char file_name[0x80];
-                    if (!parseSearch(TEMP_FILE, GBATEMP_FILTER_STRING, file_name))
-                    {
-                        // concatenate the gbatemp url and new attatchment name, store in new_url.
-                        char new_url[0x100];
-                        if (snprintf(new_url, sizeof(new_url), "%s%s", GBATEMP_URL, file_name))
-                            // download from the concatenated url. Hacky, but it works(tm).
-                            if (!downloadFile(new_url, SIGS_OUTPUT, OFF))
-                                unzip(SIGS_OUTPUT);
-                    }
+                    printDisplay("Failed to download ams sigpatches\n");
                 }
                 break;
 
             case UP_JOONIE:
-                if (!downloadFile(JOON_SIGS_URL, TEMP_FILE, ON))
+                if (downloadFile(HEKATE_SIG_URL, TEMP_FILE, OFF))
+                    unzip(TEMP_FILE);
+                else
                 {
-                    char new_url[0x80];
-                    if (!parseSearch(TEMP_FILE, GITHUB_FILTER_STRING, new_url))
-                    {
-                        char full_url[0x100];
-                        if (snprintf(full_url, 0x100, "%s%s", JOON_HACKY_SIG, new_url))
-                            if (!downloadFile(full_url, SIGS_OUTPUT, OFF))
-                                unzip(SIGS_OUTPUT);
-                    }
+                    printDisplay("Failed to download hekate sigpatches\n");
                 }
                 break;
 
             case UP_APP:
-                if (!downloadFile(APP_URL, TEMP_FILE, OFF))
+                if (downloadFile(APP_URL, TEMP_FILE, OFF))
                 {
+                    remove(APP_OUTPUT);
                     rename(TEMP_FILE, APP_OUTPUT);
                     remove(OLD_APP_PATH);
+                }
+                else
+                {
+                    printDisplay("Failed to download app update\n");
                 }
                 break;
             }
