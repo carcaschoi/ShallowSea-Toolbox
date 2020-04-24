@@ -1,4 +1,12 @@
-# Sigpatch-Updater
+# THIS PROJECT IS ARCHIVED.
+
+I am no longer updating any of my switch homebrew apps. This also means that there will be no more public releases made by me.
+
+Thank you to everyone that was kind to me along the way.
+
+----
+
+## Sigpatch-Updater
 
 This is a updater for you sigpatches! Currently it has the option to:
 
@@ -10,7 +18,7 @@ This is a updater for you sigpatches! Currently it has the option to:
 
 ----
 
-#= Where does it download the patches from?
+## Where does it download the patches from?
 
 The patches are download from my [patches repo](https://github.com/ITotalJustice/patches). These are automatically updated from the sources below.
 
