@@ -9,18 +9,17 @@
 
 
 #define ROOT                    "/"
-#define APP_PATH                "/switch/sigpatch-updater/"
-#define APP_OUTPUT              "/switch/sigpatch-updater/sigpatch-updater.nro"
-#define OLD_APP_PATH            "/switch/sigpatch-updater.nro"
+#define APP_PATH                "/switch/ShallowSea-updater/"
+#define APP_OUTPUT              "/switch/ShallowSea-updater/ShallowSea-updater.nro"
+#define OLD_APP_PATH            "/switch/ShallowSea-updater.nro"
 
-#define APP_VERSION             "0.1.3"
+#define APP_VERSION             "1.0"
 #define CURSOR_LIST_MAX         2
 
 
 const char *OPTION_LIST[] =
 {
     "= Update Sigpatches (For Atmosphere Users)",
-    "= Update Sigpatches (For Hekate / Kosmos Users)",
     "= Update this app"
 };
 
@@ -28,7 +27,7 @@ void refreshScreen(int cursor)
 {
     consoleClear();
 
-    printf("\x1B[36mSigpatch-Updater: v%s.\x1B[37m\n\n\n", APP_VERSION);
+    printf("\x1B[36mShallowSea-updater: v%s.\x1B[37m\n\n\n", APP_VERSION);
     printf("Press (A) to select option\n\n");
     printf("Press (+) to exit\n\n\n");
 
@@ -102,20 +101,11 @@ int main(int argc, char **argv)
             switch (cursor)
             {
             case UP_SIGS:
-                if (downloadFile(AMS_SIG_URL, TEMP_FILE, OFF))
+                if (downloadFile(AMS_URL, TEMP_FILE, OFF))
                     unzip(TEMP_FILE);
                 else
                 {
-                    printDisplay("Failed to download ams sigpatches\n");
-                }
-                break;
-
-            case UP_JOONIE:
-                if (downloadFile(HEKATE_SIG_URL, TEMP_FILE, OFF))
-                    unzip(TEMP_FILE);
-                else
-                {
-                    printDisplay("Failed to download hekate sigpatches\n");
+                    printDisplay("Failed to download ShallowSea-ams\n");
                 }
                 break;
 
