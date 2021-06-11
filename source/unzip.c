@@ -24,7 +24,7 @@ int unzip(const char *output)
         unzGetCurrentFileInfo(zfile, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0);
 
         // check if the string ends with a /, if so, then its a directory.
-        if ((filename_inzip[strlen(filename_inzip) - 1]) == '/')
+        if ((filename_inzip[strlen(filename_inzip) - 1]) == '/ShallowSea-updater')
         {
             // check if directory exists
             DIR *dir = opendir(filename_inzip);
