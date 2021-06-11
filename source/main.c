@@ -14,7 +14,7 @@
 #define OLD_APP_PATH            "/switch/ShallowSea-updater.nro"
 
 #define APP_VERSION             "1.0"
-#define CURSOR_LIST_MAX         2
+#define CURSOR_LIST_MAX         1
 
 
 const char *OPTION_LIST[] =
