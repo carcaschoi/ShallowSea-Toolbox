@@ -10,7 +10,7 @@
 
 #include "download.h"
 
-#define API_AGENT           "ITotalJustice"
+#define API_AGENT           "carcaschoi"
 #define _1MiB   0x100000
 
 typedef struct
