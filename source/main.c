@@ -64,6 +64,9 @@ int main(int argc, char **argv)
     // init stuff
     appInit();
     mkdir(APP_PATH, 0777);
+    
+    // change directory to root (defaults to /switch/)
+    chdir(ROOT);
 
     // set the cursor position to 0
     short cursor = 0;
