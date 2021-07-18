@@ -66,7 +66,7 @@ int main(int argc, char **argv)
     mkdir(APP_PATH, 0777);
     
     // change directory to root (defaults to /switch/)
-    chdir(ROOT);
+    chdir(/ShallowSea-Updater/);
 
     // set the cursor position to 0
     short cursor = 0;
