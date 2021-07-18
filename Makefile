@@ -37,8 +37,8 @@ include $(DEVKITPRO)/libnx/switch_rules
 #   of a homebrew executable (.nro). This is intended to be used for sysmodules.
 #   NACP building is skipped as well.
 #---------------------------------------------------------------------------------
-APP_TITLE   := 	Sigpatch-Updater
-APP_AUTHOR  := 	TotalJustice
+APP_TITLE   := 	ShallowSea-Updater
+APP_AUTHOR  := 	carcaschoi
 APP_VERSION := 	0.1.3
 
 TARGET		:=	$(notdir $(CURDIR))
