@@ -19,7 +19,7 @@
 
 const char *OPTION_LIST[] =
 {
-    "= Update Sigpatches (For Atmosphere Users)",
+    "= Update ShallowSea-ams",
     "= Update this app"
 };
 
