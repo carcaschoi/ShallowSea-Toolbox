@@ -22,6 +22,8 @@ int unzip(const char *output)
 
         unzOpenCurrentFile(zfile);
         unzGetCurrentFileInfo(zfile, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0);
+        
+        mkdir("updating", 0777);
 
         // check if the string ends with a /, if so, then its a directory.
         if ((filename_inzip[strlen(filename_inzip) - 1]) == '/')
@@ -31,14 +33,13 @@ int unzip(const char *output)
             if (dir) closedir(dir);
             else
             {
-                printf("creating directory: %s\n", filename_inzip);
                 mkdir(filename_inzip, 0777);
             }
         }
 
         else
         {
-            const char *write_filename = filename_inzip;
+            const char *write_filename = "/updating/filename_inzip";
             FILE *outfile = fopen(write_filename, "wb");
             void *buf = malloc(WRITEBUFFERSIZE);
 
