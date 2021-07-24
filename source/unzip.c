@@ -38,8 +38,9 @@ int unzip(const char *output)
         }
 
         else
-        {
-            const char *write_filename = /updating/"filename_inzip";
+        {   
+            chdir("/updating/")
+            const char *write_filename = filename_inzip;
             FILE *outfile = fopen(write_filename, "wb");
             void *buf = malloc(WRITEBUFFERSIZE);
 
