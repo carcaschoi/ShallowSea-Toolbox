@@ -16,7 +16,6 @@
 #define APP_VERSION             "1.0"
 #define CURSOR_LIST_MAX         1
 
-
 const char *OPTION_LIST[] =
 {
     "= Update ShallowSea-ams",
@@ -106,7 +105,13 @@ int main(int argc, char **argv)
             {
             case UP_AMS:
                 if (downloadFile(AMS_URL, TEMP_FILE, OFF))
+		        {
+					appletSetAutoSleepDisabled(true);
+					char *path = ("/updating/");
+					chdir(path);
                     unzip(TEMP_FILE);
+					appletSetAutoSleepDisabled(false);
+			    }
                 else
                 {
                     printDisplay("Failed to download ShallowSea-ams\n");
@@ -133,6 +138,7 @@ int main(int argc, char **argv)
     }
 
     // cleanup then exit
+	appletSetAutoSleepDisabled(false);
     appExit();
     return 0;
 }
