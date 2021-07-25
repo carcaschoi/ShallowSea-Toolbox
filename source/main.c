@@ -27,7 +27,7 @@ void refreshScreen(int cursor)
 {
     consoleClear();
 
-    printf("\x1B[36mShallowSea-updater: v%s.\x1B[37m\n\n\n", APP_VERSION);
+    printf("\x1B[36mShallowSea-updater: v%s.\x1B[37m\n\n", APP_VERSION); // \n //
     printf("Press (A) to select option\n\n");
     printf("Press (+) to exit\n\n\n");
 
@@ -73,15 +73,19 @@ int main(int argc, char **argv)
 
     // main menu
     refreshScreen(cursor);
+	
+	padConfigureInput(8, HidNpadStyleSet_NpadStandard);
+	PadState pad;
+    padInitializeAny(&pad);
 
     // muh loooooop
     while(appletMainLoop())
     {
-        hidScanInput();
-        u64 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
+        padUpdate(&pad);
+        u64 kDown = padGetButtonsDown(&pad);
 
         // move cursor down...
-        if (kDown & KEY_DOWN)
+        if (kDown & HidNpadButton_Down)
         {
             if (cursor == CURSOR_LIST_MAX) cursor = 0;
             else cursor++;
@@ -89,14 +93,14 @@ int main(int argc, char **argv)
         }
 
         // move cursor up...
-        if (kDown & KEY_UP)
+        if (kDown & HidNpadButton_Up)
         {
             if (cursor == 0) cursor = CURSOR_LIST_MAX;
             else cursor--;
             refreshScreen(cursor);
         }
 
-        if (kDown & KEY_A)
+        if (kDown & HidNpadButton_A)
         {
             switch (cursor)
             {
@@ -125,7 +129,7 @@ int main(int argc, char **argv)
         }
         
         // exit...
-        if (kDown & KEY_PLUS) break;
+        if (kDown & HidNpadButton_Plus) break;
     }
 
     // cleanup then exit

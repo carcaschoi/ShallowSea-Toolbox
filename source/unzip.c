@@ -24,7 +24,7 @@ int unzip(const char *output)
         unzGetCurrentFileInfo(zfile, &file_info, innerFileName, sizeof(innerFileName), NULL, 0, NULL, 0);
         
         // make a new directory for the aio package//
-        DIR *dir = opendir(updating);
+        DIR *dir = opendir("updating");
         if (dir) closedir(dir);
         mkdir("updating", 0777);
 
