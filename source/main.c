@@ -27,7 +27,7 @@ void refreshScreen(int cursor)
 {
     consoleClear();
 
-    printf("\x1B[36mShallowSea-updater: v%s.\x1B[37m\n\n", APP_VERSION); // \n //
+    printf("\x1B[36mShallowSea-updater: v%s.\x1B[37m\n\n\n", APP_VERSION); // \n //
     printf("Press (A) to select option\n\n");
     printf("Press (+) to exit\n\n\n");
 
