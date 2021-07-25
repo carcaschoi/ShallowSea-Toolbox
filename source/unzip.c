@@ -10,7 +10,8 @@
 #define MAXFILENAME     0x301
 
 int unzip(const char *output)
-{
+{   
+    appletSetAutoSleepDisabled(true);
     unzFile zfile = unzOpen(output);
     unz_global_info gi = {0};
     unzGetGlobalInfo(zfile, &gi);

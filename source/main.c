@@ -106,11 +106,9 @@ int main(int argc, char **argv)
             case UP_AMS:
                 if (downloadFile(AMS_URL, TEMP_FILE, OFF))
 		        {
-					appletSetAutoSleepDisabled(true);
 					char *path = ("/updating/");
 					chdir(path);
                     unzip(TEMP_FILE);
-					appletSetAutoSleepDisabled(false);
 			    }
                 else
                 {
@@ -138,7 +136,6 @@ int main(int argc, char **argv)
     }
 
     // cleanup then exit
-	appletSetAutoSleepDisabled(false);
     appExit();
     return 0;
 }
