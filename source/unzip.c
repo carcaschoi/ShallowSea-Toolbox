@@ -23,6 +23,9 @@ int unzip(const char *output)
         unzOpenCurrentFile(zfile);
         unzGetCurrentFileInfo(zfile, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0);
         
+        // make a new directory for the aio package//
+        DIR *dir = opendir(filename_inzip);
+        if (dir) closedir(dir);
         mkdir("updating", 0777);
 
         // check if the string ends with a /, if so, then its a directory.
@@ -39,7 +42,6 @@ int unzip(const char *output)
 
         else
         {   
-            chdir("/updating/")
             const char *write_filename = filename_inzip;
             FILE *outfile = fopen(write_filename, "wb");
             void *buf = malloc(WRITEBUFFERSIZE);
