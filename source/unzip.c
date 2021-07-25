@@ -17,36 +17,36 @@ int unzip(const char *output)
 
     for (int i = 0; i < gi.number_entry; i++)
     {
-        char filename_inzip[MAXFILENAME] = {0};
+        char innerFileName[MAXFILENAME] = {0};
         unz_file_info file_info = {0};
 
         unzOpenCurrentFile(zfile);
-        unzGetCurrentFileInfo(zfile, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0);
+        unzGetCurrentFileInfo(zfile, &file_info, innerFileName, sizeof(innerFileName), NULL, 0, NULL, 0);
         
         // make a new directory for the aio package//
-        DIR *dir = opendir(filename_inzip);
+        DIR *dir = opendir(updating);
         if (dir) closedir(dir);
         mkdir("updating", 0777);
 
         // check if the string ends with a /, if so, then its a directory.
-        if ((filename_inzip[strlen(filename_inzip) - 1]) == '/')
+        if ((innerFileName[strlen(innerFileName) - 1]) == '/')
         {
             // check if directory exists
-            DIR *dir = opendir(filename_inzip);
+            DIR *dir = opendir(innerFileName);
             if (dir) closedir(dir);
             else
             {
-                mkdir(filename_inzip, 0777);
+                mkdir(innerFileName, 0777);
             }
         }
 
         else
         {   
-            const char *write_filename = filename_inzip;
+            const char *write_filename = innerFileName;
             FILE *outfile = fopen(write_filename, "wb");
             void *buf = malloc(WRITEBUFFERSIZE);
 
-            printf("writing file: %s\n", filename_inzip);
+            printf("writing file: %s\n", innerFileName);
             consoleUpdate(NULL);
 
             for (int j = unzReadCurrentFile(zfile, buf, WRITEBUFFERSIZE); j > 0; j = unzReadCurrentFile(zfile, buf, WRITEBUFFERSIZE))
