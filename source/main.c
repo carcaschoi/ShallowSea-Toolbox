@@ -116,6 +116,7 @@ int main(int argc, char **argv)
                 else
                 {
                     printDisplay("Failed to download ShallowSea-ams\n");
+					remove(TEMP_FILE);
                 }
                 break;
 
