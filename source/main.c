@@ -63,7 +63,6 @@ int main(int argc, char **argv)
     // init stuff
     appInit();
     mkdir(APP_PATH, 0777);
-    mkdir("updating", 0777);
     
     // change directory to root (defaults to /switch/)
     chdir(ROOT);
@@ -107,9 +106,9 @@ int main(int argc, char **argv)
             case UP_AMS:
                 if (downloadFile(AMS_URL, TEMP_FILE, OFF))
 		        {
-					char *path = ("/updating/");
-					chdir(path);
-                    unzip(TEMP_FILE);
+				char *path = ("/updating/");
+				chdir(path);
+                unzip(TEMP_FILE);
 			    }
                 else
                 {
