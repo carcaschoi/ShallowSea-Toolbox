@@ -63,6 +63,11 @@ int main(int argc, char **argv)
     // init stuff
     appInit();
     mkdir(APP_PATH, 0777);
+	
+    // make a new directory for the aio package//
+    DIR *dir = opendir("updating");
+    if (dir) closedir(dir);
+    mkdir("updating", 0777);
     
     // change directory to root (defaults to /switch/)
     chdir(ROOT);
