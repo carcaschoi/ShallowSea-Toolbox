@@ -56,6 +56,7 @@ void appExit()
 {
     socketExit();
     consoleExit(NULL);
+	appletSetAutoSleepDisabled(false);
 }
 
 int main(int argc, char **argv)
