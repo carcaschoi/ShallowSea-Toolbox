@@ -23,11 +23,6 @@ int unzip(const char *output)
 
         unzOpenCurrentFile(zfile);
         unzGetCurrentFileInfo(zfile, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0);
-		
-    // make a new directory for the aio package//
-    DIR *dir = opendir("updating");
-    if (dir) closedir(dir);
-    mkdir("updating", 0777);
 
         // check if the string ends with a /, if so, then its a directory.
         if ((filename_inzip[strlen(filename_inzip) - 1]) == '/')
