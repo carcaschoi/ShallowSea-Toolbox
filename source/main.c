@@ -12,6 +12,7 @@
 #define APP_PATH                "/switch/ShallowSea-updater/"
 #define APP_OUTPUT              "/switch/ShallowSea-updater/ShallowSea-updater.nro"
 #define OLD_APP_PATH            "/switch/ShallowSea-updater.nro"
+#define AMS                     "/updating/"
 
 #define APP_VERSION             "1.0"
 #define CURSOR_LIST_MAX         1
@@ -64,6 +65,7 @@ int main(int argc, char **argv)
     // init stuff
     appInit();
     mkdir(APP_PATH, 0777);
+	mkdir(AMS, 0777);
     
     // change directory to root (defaults to /switch/)
     chdir(ROOT);
@@ -107,9 +109,9 @@ int main(int argc, char **argv)
             case UP_AMS:
                 if (downloadFile(AMS_URL, TEMP_FILE, OFF))
 		        {
-				char *path = ("/updating/");
-				chdir(path);
-                unzip(TEMP_FILE);
+					appletSetAutoSleepDisabled(true);
+				    chdir(AMS);
+                    unzip(TEMP_FILE);
 			    }
                 else
                 {
