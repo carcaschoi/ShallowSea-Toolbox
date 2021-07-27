@@ -7,7 +7,7 @@
 
 #include "download.h"
 #include "unzip.h"
-#include "reboot_payload.h"
+//#include "reboot_payload.h"
 
 
 #define ROOT                    "/"
@@ -111,11 +111,12 @@ int main(int argc, char **argv)
             case UP_AMS:
                 if (downloadFile(AMS_URL, TEMP_FILE, OFF))
 		        {
-			  appletSetAutoSleepDisabled(true);
-		          chdir(AMS);
-                          unzip(TEMP_FILE);
-			  reboot_payload("/updating/bootloader/payloads/tegraexplorer.bin");
-			}
+					appletSetAutoSleepDisabled(true);
+				    chdir(AMS);
+                    unzip(TEMP_FILE);
+					//copyFile("/config/ShallowSea-updater/startup.te", "/");
+					//reboot_payload("/updating/bootloader/payloads/tegraexplorer.bin");
+			    }
                 else
                 {
                     printDisplay("Failed to download ShallowSea-ams\n");
