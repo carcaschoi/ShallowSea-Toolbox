@@ -60,7 +60,7 @@ int unzip(const char *output)
     unzClose(zfile);
     remove(output);
     
-    printf("\nfinished!\n\nRemember to reboot for the patches to be loaded!\n");
+    printf("\nfinished!\n\nNow reboot to tegraexplorer to finish the update process!\n");
     consoleUpdate(NULL);
 
     return 0;
