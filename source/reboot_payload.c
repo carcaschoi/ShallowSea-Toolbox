@@ -2,7 +2,7 @@
 #include <string.h>
 #include <switch.h>
 
-#include "menu.h"
+#include "main.c"
 
 // AMS CODE START
 #define IRAM_PAYLOAD_MAX_SIZE 0x2F000
