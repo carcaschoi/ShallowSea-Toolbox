@@ -3,6 +3,7 @@
 #include <unistd.h> // chdir
 #include <dirent.h> // mkdir
 #include <switch.h>
+#include <string.h> // copyfile
 
 #include "download.h"
 #include "unzip.h"
