@@ -6,6 +6,7 @@
 
 #include "download.h"
 #include "unzip.h"
+#include "reboot_payload.h"
 
 
 #define ROOT                    "/"
@@ -14,7 +15,7 @@
 #define OLD_APP_PATH            "/switch/ShallowSea-updater.nro"
 #define AMS                     "/updating/"
 
-#define APP_VERSION             "1.0"
+#define APP_VERSION             "0.0.1"
 #define CURSOR_LIST_MAX         1
 
 const char *OPTION_LIST[] =
