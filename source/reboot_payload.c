@@ -68,6 +68,5 @@ int reboot_payload(const char *payload)
         fclose(fp);
         reboot_to_payload();
     }
-    errorBox(350, 250, "Failed to open payload...");
     return 1;
 }
