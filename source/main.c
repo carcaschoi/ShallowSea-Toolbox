@@ -16,7 +16,7 @@
 #define OLD_APP_PATH            "/switch/ShallowSea-updater.nro"
 #define AMS                     "/updating/"
 
-#define APP_VERSION             "0.0.2"
+#define APP_VERSION             "0.0.3"
 #define CURSOR_LIST_MAX         1
 
 const char *OPTION_LIST[] =
@@ -29,7 +29,7 @@ void refreshScreen(int cursor)
 {
     consoleClear();
 
-    printf("\x1B[36mShallowSea-updater by carcaschoi: v%s.\x1B[37m\n\n\n", APP_VERSION); // \n //
+    printf("\x1B[36mShallowSea-updater by carcaschoi: v%s\x1B[37m\n\n\n", APP_VERSION); // \n //
     printf("Press (A) to select option\n\n");
     printf("Press (+) to exit\n\n\n");
 
@@ -105,7 +105,8 @@ int main(int argc, char **argv)
         }
 
         if (kDown & HidNpadButton_A)
-        {
+        {   
+	        remove(TEMP_FILE);
             switch (cursor)
             {
             case UP_AMS:
@@ -120,7 +121,6 @@ int main(int argc, char **argv)
                 else
                 {
                     printDisplay("Failed to download ShallowSea-ams\n");
-					remove(TEMP_FILE);
                 }
                 break;
 
