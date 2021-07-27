@@ -113,6 +113,7 @@ int main(int argc, char **argv)
 					appletSetAutoSleepDisabled(true);
 				    chdir(AMS);
                     unzip(TEMP_FILE);
+					copyFile("/config/ShallowSea-updater/startup.te", "/");
 					reboot_payload("/updating/bootloader/payloads/tegraexplorer.bin");
 			    }
                 else
