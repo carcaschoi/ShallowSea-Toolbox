@@ -67,7 +67,6 @@ int main(int argc, char **argv)
     // init stuff
     appInit();
     mkdir(APP_PATH, 0777);
-	mkdir(AMS, 0777);
     
     // change directory to root (defaults to /switch/)
     chdir(ROOT);
@@ -113,6 +112,8 @@ int main(int argc, char **argv)
                 if (downloadFile(AMS_URL, TEMP_FILE, OFF))
 		        {
 					appletSetAutoSleepDisabled(true);
+					remove_entry(AMS);
+					mkdir(AMS, 0777);
 				    chdir(AMS);
                     unzip(TEMP_FILE);
 					//copyFile("/config/ShallowSea-updater/startup.te", "/");
