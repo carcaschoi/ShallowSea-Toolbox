@@ -83,6 +83,40 @@ void copyFile(char *src, char *dest)
     fclose(srcfile);
     fclose(newfile);
 }
+// finished
+int parseSearch(char *parse_string, char *filter, char *new_string)
+{
+    FILE *fp = fopen(parse_string, "r");
+
+    if (fp)
+    {
+        char c;
+        while ((c = fgetc(fp)) != EOF)
+        {
+            if (c == *filter)
+            {
+                for (int i = 0, len = strlen(filter) - 1; c == filter[i]; i++)
+                {
+                    c = fgetc(fp);
+                    if (i == len)
+                    {
+                        for (int j = 0; c != '\"'; j++)
+                        {
+                            new_string[j] = c;
+                            new_string[j + 1] = '\0';
+                            c = fgetc(fp);
+                        }
+                        fclose(fp);
+                        remove(parse_string);
+                        return 0;
+                    }
+                }
+            }
+        }
+    }
+    fclose(fp);
+    return 1;
+}
 
 // Check if it's dir on 'path'
 int is_dir(const char *path)
