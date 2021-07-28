@@ -184,6 +184,7 @@ int main(int argc, char **argv)
 					mkdir(AMS, 0777);
 				    chdir(AMS);
                     unzip(TEMP_FILE);
+					chdir(ROOT);
 					copyFile("updating/config/ShallowSea-updater/startup.te", "/");
 					//reboot_payload("/updating/bootloader/payloads/tegraexplorer.bin");
 			    }
