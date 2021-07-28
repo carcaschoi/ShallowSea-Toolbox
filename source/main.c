@@ -7,6 +7,7 @@
 
 #include "download.h"
 #include "unzip.h"
+#include "main.h"
 //#include "reboot_payload.h"
 
 
@@ -60,6 +61,108 @@ void appExit()
     socketExit();
     consoleExit(NULL);
 	appletSetAutoSleepDisabled(false);
+}
+
+// tell the app what copyFile does
+void copyFile(char *src, char *dest)
+{
+    FILE *srcfile = fopen(src, "rb");
+    FILE *newfile = fopen(dest, "wb");
+
+    if (srcfile && newfile)
+    {
+        char buffer[10000]; // 10kb per write, which is fast
+        size_t bytes;       // size of the file to write (10kb or filesize max)
+
+        while (0 < (bytes = fread(buffer, 1, sizeof(buffer), srcfile)))
+        {
+            fwrite(buffer, 1, bytes, newfile);
+        }
+    }
+    fclose(srcfile);
+    fclose(newfile);
+}
+
+int parseSearch(char *parse_string, char *filter, char *new_string)
+{
+    FILE *fp = fopen(parse_string, "r");
+
+    if (fp)
+    {
+        char c;
+        while ((c = fgetc(fp)) != EOF)
+        {
+            if (c == *filter)
+            {
+                for (int i = 0, len = strlen(filter) - 1; c == filter[i]; i++)
+                {
+                    c = fgetc(fp);
+                    if (i == len)
+                    {
+                        for (int j = 0; c != '\"'; j++)
+                        {
+                            new_string[j] = c;
+                            new_string[j + 1] = '\0';
+                            c = fgetc(fp);
+                        }
+                        fclose(fp);
+                        remove(parse_string);
+                        return 0;
+                    }
+                }
+            }
+        }
+    }
+
+    errorBox(350, 250, "Failed to find parse url!");
+    fclose(fp);
+    return 1;
+}
+
+// Check if it's dir on 'path'
+int is_dir(const char *path)
+{
+    struct stat path_stat;
+    stat(path, &path_stat);
+    return S_ISDIR(path_stat.st_mode);
+}
+
+// Remove all the shit. Please note that there should be no '/' char in the end. Otherwise update this snippet.
+int remove_entry(const char *dir_name)
+{
+    if (!is_dir(dir_name))
+        return unlink(dir_name);
+
+    DIR *dir = opendir(dir_name);
+
+    if (dir == NULL)
+        return 1;
+
+    size_t dSz = strlen(dir_name);
+    struct dirent *s_dirent;
+    char *full_name;
+
+    while ((s_dirent = readdir(dir)) != NULL)
+    {
+        if ((strcmp(s_dirent->d_name, ".") == 0) || (strcmp(s_dirent->d_name, "..") == 0))
+            continue;
+        full_name = malloc(dSz + strlen(s_dirent->d_name) + 2); // '/'+'\0'
+
+        strcpy(full_name, dir_name);
+        strcat(full_name, "/");
+        strcat(full_name, s_dirent->d_name);
+
+        if (s_dirent->d_type == DT_DIR)
+            remove_entry(full_name); // NOTE: Handle returning value
+        else
+            unlink(full_name); // NOTE: Add validation
+
+        free(full_name);
+    }
+
+    closedir(dir);
+
+    return rmdir(dir_name); // NOTE: Add validation
 }
 
 int main(int argc, char **argv)
@@ -116,7 +219,7 @@ int main(int argc, char **argv)
 					mkdir(AMS, 0777);
 				    chdir(AMS);
                     unzip(TEMP_FILE);
-					//copyFile("/config/ShallowSea-updater/startup.te", "/");
+					copyFile("/config/ShallowSea-updater/startup.te", "/");
 					//reboot_payload("/updating/bootloader/payloads/tegraexplorer.bin");
 			    }
                 else
