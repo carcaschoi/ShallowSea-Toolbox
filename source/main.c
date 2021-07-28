@@ -9,7 +9,7 @@
 #include "download.h"
 #include "unzip.h"
 #include "main.h"
-//#include "reboot_payload.h"
+#include "reboot_payload.h"
 
 
 #define ROOT                    "/"
