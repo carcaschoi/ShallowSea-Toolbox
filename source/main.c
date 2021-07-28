@@ -5,6 +5,10 @@
 #include <switch.h>
 #include <string.h> // copyfile
 #include <stdlib.h> //libnx ask me to add it
+#include <sys/types.h>
+#include <sys/stat.h>
+
+
 
 #include "download.h"
 #include "unzip.h"
