@@ -4,6 +4,7 @@
 #include <dirent.h> // mkdir
 #include <switch.h>
 #include <string.h> // copyfile
+#include <stdlib.h> //libnx ask me to add it
 
 #include "download.h"
 #include "unzip.h"
@@ -81,42 +82,6 @@ void copyFile(char *src, char *dest)
     }
     fclose(srcfile);
     fclose(newfile);
-}
-
-int parseSearch(char *parse_string, char *filter, char *new_string)
-{
-    FILE *fp = fopen(parse_string, "r");
-
-    if (fp)
-    {
-        char c;
-        while ((c = fgetc(fp)) != EOF)
-        {
-            if (c == *filter)
-            {
-                for (int i = 0, len = strlen(filter) - 1; c == filter[i]; i++)
-                {
-                    c = fgetc(fp);
-                    if (i == len)
-                    {
-                        for (int j = 0; c != '\"'; j++)
-                        {
-                            new_string[j] = c;
-                            new_string[j + 1] = '\0';
-                            c = fgetc(fp);
-                        }
-                        fclose(fp);
-                        remove(parse_string);
-                        return 0;
-                    }
-                }
-            }
-        }
-    }
-
-    errorBox(350, 250, "Failed to find parse url!");
-    fclose(fp);
-    return 1;
 }
 
 // Check if it's dir on 'path'
