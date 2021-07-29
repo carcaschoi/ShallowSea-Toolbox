@@ -22,13 +22,15 @@
 #define OLD_APP_PATH            "/switch/ShallowSea-updater.nro"
 #define AMS                     "/updating/"
 
-#define APP_VERSION             "0.0.8"
-#define CURSOR_LIST_MAX         1
+#define APP_VERSION             "0.0.9"
+#define CURSOR_LIST_MAX         2
 
 const char *OPTION_LIST[] =
 {
     "= Update ShallowSea-ams",
-    "= Update this app"
+	"= Update English-extra-package",
+    "= Update this app",
+	
 };
 
 void refreshScreen(int cursor)
@@ -229,6 +231,17 @@ int main(int argc, char **argv)
                 else
                 {
                     printDisplay("Failed to download ShallowSea-ams\n");
+                }
+                break;
+				
+			case UP_ENG:
+                if (downloadFile(ENG_URL, TEMP_FILE, OFF))
+		        {
+                    unzip(TEMP_FILE);
+			    }
+                else
+                {
+                    printDisplay("Failed to download English-extra-package\n");
                 }
                 break;
 
