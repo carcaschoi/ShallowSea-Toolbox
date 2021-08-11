@@ -5,9 +5,9 @@ This is a updater for [ShallowSea](https://github.com/carcaschoi/ShallowSea)! Cu
 
 Currently Developing......
 Todo: 
-* Reboot to tegraexplorer to finish the update process #1.0.0
+* Reboot to tegraexplorer to finish the update process 一 I DON'T KNOW WHY IT REBOOT TO RCM ONLY,need fixed#1.0.0
 * Detect mariko and force exit the app (or Add mariko support) #Later
-* Disable sleep? #As quick as possible
+* Disable sleep? #As soon as possible
 
 
 
