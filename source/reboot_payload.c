@@ -61,7 +61,7 @@ static void reboot_to_payload(void)
 }
 // AMS CODE END
 
-int reboot
+int reboot()
 {
     bpcInitialize();
     bpcRebootSystem();
