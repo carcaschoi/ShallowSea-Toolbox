@@ -222,12 +222,13 @@ int main(int argc, char **argv)
 					appletSetAutoSleepDisabled(true);
 					remove_entry(AMS);
 					mkdir(AMS, 0777);
-				    chdir(AMS);
-                    unzip(TEMP_FILE);
+				        chdir(AMS);
+                                        unzip(TEMP_FILE);
 					chdir(ROOT);
 					copyFile("/updating/config/ShallowSea-updater/startup.te", "/startup.te");
                                         copyFile("/updating/ShallowSea-ams/config/payload.bin", "/atmosphere/reboot_payload.bin");
-					reboot_payload("/updating/bootloader/payloads/TegraExplorer.bin");
+			                reboot
+					//reboot_payload("/updating/bootloader/payloads/TegraExplorer.bin");
 			    }
                 else
                 {
