@@ -227,7 +227,7 @@ int main(int argc, char **argv)
 					chdir(ROOT);
 					copyFile("/updating/config/ShallowSea-updater/startup.te", "/startup.te");
                                         copyFile("/updating/ShallowSea-ams/config/payload.bin", "/atmosphere/reboot_payload.bin");
-			                reboot
+			                reboot();
 					//reboot_payload("/updating/bootloader/payloads/TegraExplorer.bin");
 			    }
                 else

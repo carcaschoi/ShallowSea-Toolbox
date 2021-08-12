@@ -65,6 +65,7 @@ int reboot()
 {
     bpcInitialize();
     bpcRebootSystem();
+	return 1;
 }
 
 int reboot_payload(const char *payload)
