@@ -61,13 +61,6 @@ static void reboot_to_payload(void)
 }
 // AMS CODE END
 
-int reboot()
-{
-    bpcInitialize();
-    bpcRebootSystem();
-	return 1;
-}
-
 int reboot_payload(const char *payload)
 {
     FILE *fp = fopen(payload, "rb");
