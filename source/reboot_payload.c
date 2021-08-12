@@ -61,6 +61,12 @@ static void reboot_to_payload(void)
 }
 // AMS CODE END
 
+int reboot
+{
+    bpcInitialize();
+    bpcRebootSystem();
+}
+
 int reboot_payload(const char *payload)
 {
     FILE *fp = fopen(payload, "rb");
@@ -75,23 +81,3 @@ int reboot_payload(const char *payload)
     return 1;
 }
 
-int reboot(const char *payloc){
-    Result rc = splInitialize();
-
-    if (R_FAILED(rc)) return 1;
-
-    FILE *payload = fopen(payloc, "rb");
-    
-    if (payload == NULL){
-        MakeNotification("Payload location invalid!", 200, COLOR_RED, COLOR_BLACK);
-        return 2;
-    }
-    else {
-        fread(g_reboot_payload, 1, sizeof(g_reboot_payload), payload);
-        fclose(payload);
-        reboot_to_payload();
-    }
-
-    splExit();
-    return 0;
-}
