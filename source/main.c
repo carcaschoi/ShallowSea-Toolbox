@@ -22,7 +22,7 @@
 #define OLD_APP_PATH            "/switch/ShallowSea-updater.nro"
 #define AMS                     "/updating/"
 
-#define APP_VERSION             "0.0.9"
+#define APP_VERSION             "1.0.0"
 #define CURSOR_LIST_MAX         2
 
 const char *OPTION_LIST[] =
@@ -37,9 +37,10 @@ void refreshScreen(int cursor)
 {
     consoleClear();
 
-    printf("\x1B[36mShallowSea-updater by carcaschoi: v%s\x1B[37m\n\n\n", APP_VERSION); // \n //
-    printf("Press (A) to select option\n\n");
-    printf("Press (+) to exit\n\n\n");
+    printf("\x1B[36mShallowSea-updater by carcaschoi: v%s\x1B[37m\n\n\n", APP_VERSION);
+	printf("This app supports both erista and mariko\n\n");
+    printf("Press (A) to select option\n\n\n");
+    printf("Press (+) to exit\n\n\n\n");
 
     for (int i = 0; i < CURSOR_LIST_MAX + 1; i++)
         printf("[%c] %s\n\n", cursor == i ? 'X' : ' ', OPTION_LIST[i]);
@@ -228,6 +229,7 @@ int main(int argc, char **argv)
 					copyFile("/updating/config/ShallowSea-updater/startup.te", "/startup.te");
                     copyFile("/updating/config/ShallowSea-updater/payload.bin", "/atmosphere/reboot_payload.bin");
 					copyFile("/updating/config/ShallowSea-updater/hekate_ipl.ini", "/bootloader/hekate_ipl.ini");
+					consoleClear();
 					printDisplay("\nPlease reboot your switch to finish the update process\n");
 					//reboot_payload("sdmc:/updating/bootloader/payloads/TegraExplorer.bin");
 			    }
