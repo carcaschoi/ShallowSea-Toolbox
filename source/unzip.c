@@ -59,8 +59,6 @@ int unzip(const char *output)
 
     unzClose(zfile);
     remove(output);
-    
-    printf("\nfinished! Press + to exit\n");
     consoleUpdate(NULL);
 
     return 0;
