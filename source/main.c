@@ -22,7 +22,7 @@
 #define OLD_APP_PATH            "/switch/ShallowSea-updater.nro"
 #define AMS                     "/updating/"
 
-#define APP_VERSION             "1.0.0"
+#define APP_VERSION             "1.0.1"
 #define CURSOR_LIST_MAX         2
 
 const char *OPTION_LIST[] =
@@ -38,9 +38,10 @@ void refreshScreen(int cursor)
     consoleClear();
 
     printf("\x1B[36mShallowSea-updater by carcaschoi: v%s\x1B[37m\n\n\n", APP_VERSION);
-	printf("This app supports both erista and mariko\n\n");
-    printf("Press (A) to select option\n\n\n");
-    printf("Press (+) to exit\n\n\n\n");
+	printf("Github: https://github.com/carcaschoi/ShallowSea-Updater/\n\n");
+	printf("This app supports both erista and mariko\n\n\n");
+    printf("Press (A) to select option\n\n\n\n");
+    printf("Press (+) to exit\n\n\n\n\n");
 
     for (int i = 0; i < CURSOR_LIST_MAX + 1; i++)
         printf("[%c] %s\n\n", cursor == i ? 'X' : ' ', OPTION_LIST[i]);
