@@ -228,7 +228,7 @@ int main(int argc, char **argv)
 					copyFile("/updating/config/ShallowSea-updater/startup.te", "/startup.te");
                     copyFile("/updating/config/ShallowSea-updater/payload.bin", "/atmosphere/reboot_payload.bin");
 					copyFile("/updating/config/ShallowSea-updater/hekate_ipl.ini", "/bootloader/hekate_ipl.ini");
-					printf("\nPlease reboot your switch to finish the update process\n")
+					printf("\nPlease reboot your switch to finish the update process\n");
 					//reboot_payload("sdmc:/updating/bootloader/payloads/TegraExplorer.bin");
 			    }
                 else
@@ -241,7 +241,7 @@ int main(int argc, char **argv)
                 if (downloadFile(ENG_URL, TEMP_FILE, OFF))
 		        {
                     unzip(TEMP_FILE);
-					printf("\nPlease reboot your switch to finish the update process\n")
+					printf("\nPlease reboot your switch to finish the update process\n");
 			    }
                 else
                 {
