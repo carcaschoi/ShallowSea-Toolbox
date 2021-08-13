@@ -1,12 +1,10 @@
-# Not support Mariko console!!
 ## ShallowSea-Updater
 
 This is a updater for [ShallowSea](https://github.com/carcaschoi/ShallowSea)! Currently it has the option to:
 
 Currently Developing......
 Todo: 
-* Reboot to tegraexplorer to finish the update process 一 I DON'T KNOW WHY IT REBOOT TO RCM ONLY,need fixed#1.0.0
-* Detect mariko and force exit the app (or Add mariko support) #Later
+* Auto Reboot to payload(tegraexplorer to finish the update process) # Welcome for PR, I don't know how to do
 * Disable sleep? #As soon as possible
 
 
