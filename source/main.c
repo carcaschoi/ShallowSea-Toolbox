@@ -22,7 +22,7 @@
 #define OLD_APP_PATH            "/switch/ShallowSea-updater.nro"
 #define AMS                     "/updating/"
 
-#define APP_VERSION             "1.0.1"
+#define APP_VERSION             "1.0.2"
 #define CURSOR_LIST_MAX         2
 
 const char *OPTION_LIST[] =
@@ -244,7 +244,7 @@ int main(int argc, char **argv)
                 if (downloadFile(ENG_URL, TEMP_FILE, OFF))
 		        {
                     unzip(TEMP_FILE);
-					printDisplay("\nPlease reboot your switch to finish the update process\n");
+					printDisplay("\nPlease reboot your switch (or launch hekate payload) to finish the update process\n");
 			    }
                 else
                 {
