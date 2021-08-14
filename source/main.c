@@ -232,7 +232,7 @@ int main(int argc, char **argv)
 					copyFile("/updating/config/ShallowSea-updater/hekate_ipl.ini", "/bootloader/hekate_ipl.ini");
 					consoleClear();
 					printDisplay("\nPlease reboot your switch to finish the update process\n");
-					//reboot_payload("sdmc:/updating/bootloader/payloads/TegraExplorer.bin");
+					//reboot_payload("/atmosphere/reboot_payload.bin");
 			    }
                 else
                 {
