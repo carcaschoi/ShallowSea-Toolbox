@@ -5,8 +5,8 @@
 
 #define AMS_URL     "https://github.com/carcaschoi/ShallowSea/releases/latest/download/ShallowSea-ams.zip"
 #define ENG_URL     "https://github.com/carcaschoi/ShallowSea/releases/latest/download/switch_English_extra_package.zip"
-#define APP_URL     "https://github.com/carcaschoi/ShallowSea-Updater/releases/latest/download/ShallowSea-updater.nro"
-#define TEMP_FILE   "/switch/ShallowSea-updater/temp"
+#define APP_URL     "https://github.com/carcaschoi/ShallowSea-Toolbox/releases/latest/download/ShallowSea-toolbox.nro"
+#define TEMP_FILE   "/config/ShallowSea-updater/temp"
 
 #define ON              1
 #define OFF             0

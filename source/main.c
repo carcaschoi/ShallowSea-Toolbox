@@ -17,9 +17,9 @@
 
 
 #define ROOT                    "/"
-#define APP_PATH                "/switch/ShallowSea-updater/"
-#define APP_OUTPUT              "/switch/ShallowSea-updater/ShallowSea-updater.nro"
-#define OLD_APP_PATH            "/switch/ShallowSea-updater.nro"
+#define APP_PATH                "/switch/ShallowSea-toolbox/"
+#define APP_OUTPUT              "/switch/ShallowSea-toolbox/ShallowSea-toolbox.nro"
+#define OLD_APP_PATH            "/switch/ShallowSea-updater/ShallowSea-updater.nro"
 #define AMS                     "/updating/"
 
 #define APP_VERSION             "1.0.3"
@@ -37,8 +37,8 @@ void refreshScreen(int cursor)
 {
     consoleClear();
 
-    printf("\x1B[36mShallowSea-updater by carcaschoi: v%s\x1B[37m\n\n\n", APP_VERSION);
-	printf("Github: https://github.com/carcaschoi/ShallowSea-Updater/\n\n");
+    printf("\x1B[36mShallowSea-Toolbox by carcaschoi: v%s\x1B[37m\n\n\n", APP_VERSION);
+	printf("Github: https://github.com/carcaschoi/ShallowSea-Toolbox/\n\n");
 	printf("This app supports both erista and mariko\n\n\n");
     printf("Press (A) to select option\n\n\n\n");
     printf("Press (+) to exit\n\n\n\n\n");
