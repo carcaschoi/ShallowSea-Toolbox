@@ -7,8 +7,9 @@
 #include <stdlib.h> //libnx ask me to add it
 #include <sys/types.h>
 #include <sys/stat.h>
-
-
+#include <poll.h> 
+#include <netinet/in.h>
+#include <jansson.h>
 
 #include "download.h"
 #include "unzip.h"
@@ -24,6 +25,7 @@
 
 #define APP_VERSION             "1.0.3"
 #define CURSOR_LIST_MAX         2
+#define wait(msec) svcSleepThread(10000000 * (s64)msec)
 
 const char *OPTION_LIST[] =
 {
@@ -233,7 +235,7 @@ int main(int argc, char **argv)
                                         copyFile("/updating/boot.dat", "/boot.dat");
                                         copyFile("/updating/boot.ini", "/boot.ini");
 					copyFile("/updating/config/ShallowSea-updater/hekate_ipl.ini", "/bootloader/hekate_ipl.ini");
-					//rename("/NSP/", "/helloworld/")
+					//("/NSP/", "/helloworld/");
 					consoleClear();
 					printDisplay("\nPlease reboot your switch to finish the update process\n");
 					//reboot_payload("/atmosphere/reboot_payload.bin");
