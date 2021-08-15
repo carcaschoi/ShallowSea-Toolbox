@@ -194,6 +194,7 @@ int main(int argc, char **argv)
     // muh loooooop
     while(appletMainLoop())
     {
+		appletSetAutoSleepDisabled(true);
         padUpdate(&pad);
         u64 kDown = padGetButtonsDown(&pad);
 
@@ -221,7 +222,6 @@ int main(int argc, char **argv)
             case UP_AMS:
                 if (downloadFile(AMS_URL, TEMP_FILE, OFF))
 		        {
-					appletSetAutoSleepDisabled(true);
 					remove_entry(AMS);
 					mkdir(AMS, 0777);
 				    chdir(AMS);
@@ -233,6 +233,7 @@ int main(int argc, char **argv)
                                         copyFile("/updating/boot.dat", "/boot.dat");
                                         copyFile("/updating/boot.ini", "/boot.ini");
 					copyFile("/updating/config/ShallowSea-updater/hekate_ipl.ini", "/bootloader/hekate_ipl.ini");
+					//rename("/NSP/", "/helloworld/")
 					consoleClear();
 					printDisplay("\nPlease reboot your switch to finish the update process\n");
 					//reboot_payload("/atmosphere/reboot_payload.bin");
