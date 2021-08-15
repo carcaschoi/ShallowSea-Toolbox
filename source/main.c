@@ -22,7 +22,7 @@
 #define OLD_APP_PATH            "/switch/ShallowSea-updater.nro"
 #define AMS                     "/updating/"
 
-#define APP_VERSION             "1.0.2"
+#define APP_VERSION             "1.0.3"
 #define CURSOR_LIST_MAX         2
 
 const char *OPTION_LIST[] =
@@ -229,6 +229,9 @@ int main(int argc, char **argv)
 					chdir(ROOT);
 					copyFile("/updating/config/ShallowSea-updater/startup.te", "/startup.te");
                     copyFile("/updating/config/ShallowSea-updater/payload.bin", "/atmosphere/reboot_payload.bin");
+                                        copyFile("/updating/config/ShallowSea-updater/payload.bin", "/payload.bin");
+                                        copyFile("/updating/boot.dat", "/boot.dat");
+                                        copyFile("/updating/boot.ini", "/boot.ini");
 					copyFile("/updating/config/ShallowSea-updater/hekate_ipl.ini", "/bootloader/hekate_ipl.ini");
 					consoleClear();
 					printDisplay("\nPlease reboot your switch to finish the update process\n");
