@@ -25,7 +25,6 @@
 
 #define APP_VERSION             "1.0.3"
 #define CURSOR_LIST_MAX         2
-#define wait(msec) svcSleepThread(10000000 * (s64)msec)
 
 const char *OPTION_LIST[] =
 {
