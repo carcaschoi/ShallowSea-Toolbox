@@ -235,7 +235,7 @@ int main(int argc, char **argv)
                                         copyFile("/updating/boot.dat", "/boot.dat");
                                         copyFile("/updating/boot.ini", "/boot.ini");
 					copyFile("/updating/config/ShallowSea-updater/hekate_ipl.ini", "/bootloader/hekate_ipl.ini");
-					//("/NSP/", "/helloworld/");
+					//rename("/NSP/", "/helloworld/");
 					consoleClear();
 					printDisplay("\nPlease reboot your switch to finish the update process\n");
 					//reboot_payload("/atmosphere/reboot_payload.bin");
