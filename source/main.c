@@ -63,6 +63,7 @@ int appInit()
 {
     consoleInit(NULL);
     socketInitializeDefault();
+    appletSetAutoSleepDisabled(true);
     return 0;
 }
 
@@ -195,7 +196,6 @@ int main(int argc, char **argv)
     // muh loooooop
     while(appletMainLoop())
     {
-		appletSetAutoSleepDisabled(true);
         padUpdate(&pad);
         u64 kDown = padGetButtonsDown(&pad);
 
@@ -236,7 +236,7 @@ int main(int argc, char **argv)
 					copyFile("/updating/config/ShallowSea-updater/hekate_ipl.ini", "/bootloader/hekate_ipl.ini");
 					//rename("/NSP/", "/helloworld/");
 					consoleClear();
-					printDisplay("\nPlease reboot your switch to finish the update process\n");
+					printDisplay("\nPlease reboot your switch (or launch hekate payload) to finish the update process\n");
 					//reboot_payload("/atmosphere/reboot_payload.bin");
 			    }
                 else
