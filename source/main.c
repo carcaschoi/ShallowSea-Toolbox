@@ -22,6 +22,7 @@
 #define APP_OUTPUT              "/switch/ShallowSea-toolbox/ShallowSea-toolbox.nro"
 #define OLD_APP_PATH            "/switch/ShallowSea-updater/ShallowSea-updater.nro"
 #define AMS                     "/updating/"
+#define wait(msec) svcSleepThread(10000000 * (s64)msec)
 
 #define APP_VERSION             "1.0.3"
 #define CURSOR_LIST_MAX         2
@@ -63,7 +64,6 @@ int appInit()
 {
     consoleInit(NULL);
     socketInitializeDefault();
-    appletSetAutoSleepDisabled(true);
     return 0;
 }
 
@@ -223,6 +223,7 @@ int main(int argc, char **argv)
             case UP_AMS:
                 if (downloadFile(AMS_URL, TEMP_FILE, OFF))
 		        {
+					appletSetAutoSleepDisabled(true);
 					remove_entry(AMS);
 					mkdir(AMS, 0777);
 				    chdir(AMS);
@@ -236,7 +237,7 @@ int main(int argc, char **argv)
 					copyFile("/updating/config/ShallowSea-updater/hekate_ipl.ini", "/bootloader/hekate_ipl.ini");
 					//rename("/NSP/", "/helloworld/");
 					consoleClear();
-					printDisplay("\nPlease reboot your switch (or launch hekate payload) to finish the update process\n");
+					printDisplay("Please reboot your switch (or launch hekate payload) to finish the update process\n");
 					//reboot_payload("/atmosphere/reboot_payload.bin");
 			    }
                 else
@@ -248,8 +249,10 @@ int main(int argc, char **argv)
 			case UP_ENG:
                 if (downloadFile(ENG_URL, TEMP_FILE, OFF))
 		        {
+					appletSetAutoSleepDisabled(true);
                     unzip(TEMP_FILE);
-					printDisplay("\nPlease reboot your switch (or launch hekate payload) to finish the update process\n");
+					consoleClear();
+					printDisplay("Please reboot your switch to finish the update process\n");
 			    }
                 else
                 {
@@ -260,10 +263,11 @@ int main(int argc, char **argv)
             case UP_APP:
                 if (downloadFile(APP_URL, TEMP_FILE, OFF))
                 {
+					appletSetAutoSleepDisabled(true);
                     remove(APP_OUTPUT);
                     rename(TEMP_FILE, APP_OUTPUT);
                     remove(OLD_APP_PATH);
-					printDisplay("Please reopen the app");
+					printf("Please reopen the app");
                 }
                 else
                 {

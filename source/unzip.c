@@ -11,13 +11,18 @@
 
 int unzip(const char *output)
 {   
-    appletSetAutoSleepDisabled(true);
     unzFile zfile = unzOpen(output);
     unz_global_info gi = {0};
     unzGetGlobalInfo(zfile, &gi);
+	
+	printf("\nUnzipping. There are %ld files in archive.\n\n", gi.number_entry);
+    printf("0                  20                  40                  60                 80");
 
     for (int i = 0; i < gi.number_entry; i++)
     {
+		printf("|");
+        consoleUpdate(NULL);
+		
         char filename_inzip[MAXFILENAME] = {0};
         unz_file_info file_info = {0};
 
@@ -41,9 +46,6 @@ int unzip(const char *output)
             const char *write_filename = filename_inzip;
             FILE *outfile = fopen(write_filename, "wb");
             void *buf = malloc(WRITEBUFFERSIZE);
-
-            printf("writing file: %s\n", filename_inzip);
-            consoleUpdate(NULL);
 
             for (int j = unzReadCurrentFile(zfile, buf, WRITEBUFFERSIZE); j > 0; j = unzReadCurrentFile(zfile, buf, WRITEBUFFERSIZE))
                 fwrite(buf, 1, j, outfile);
