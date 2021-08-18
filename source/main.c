@@ -267,7 +267,7 @@ int main(int argc, char **argv)
                     remove(APP_OUTPUT);
                     rename(TEMP_FILE, APP_OUTPUT);
                     remove(OLD_APP_PATH);
-					printf("Please reopen the app");
+		    printDisplay("Please reopen the app");
                 }
                 else
                 {
