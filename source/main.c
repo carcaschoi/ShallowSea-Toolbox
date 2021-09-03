@@ -238,7 +238,7 @@ int main(int argc, char **argv)
 					//rename("/NSP/", "/helloworld/");
 					consoleClear();
 					printDisplay("Please reboot your switch (or launch hekate payload) to finish the update process\n");
-					//reboot_payload("/atmosphere/reboot_payload.bin");
+					//reboot_payload("sdmc:/atmosphere/reboot_payload.bin");
 			    }
                 else
                 {
