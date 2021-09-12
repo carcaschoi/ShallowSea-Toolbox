@@ -15,12 +15,11 @@ int unzip(const char *output)
     unz_global_info gi = {0};
     unzGetGlobalInfo(zfile, &gi);
 	
-	printf("\nUnzipping. There are %ld files in archive.\n\n", gi.number_entry);
-    printf("0                  20                  40                  60                 80");
+	printf("\nUnzipping. There are %ld files in the zip file.\n\nYou can enjoy coffee now.\n\n", gi.number_entry);
 
     for (int i = 0; i < gi.number_entry; i++)
     {
-		printf("|");
+		printf("/");
         consoleUpdate(NULL);
 		
         char filename_inzip[MAXFILENAME] = {0};

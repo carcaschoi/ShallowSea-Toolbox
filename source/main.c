@@ -24,7 +24,7 @@
 #define AMS                     "/updating/"
 #define wait(msec) svcSleepThread(10000000 * (s64)msec)
 
-#define APP_VERSION             "1.0.4"
+#define APP_VERSION             "1.0.5"
 #define CURSOR_LIST_MAX         2
 
 const char *OPTION_LIST[] =
@@ -192,6 +192,12 @@ int main(int argc, char **argv)
 	padConfigureInput(8, HidNpadStyleSet_NpadStandard);
 	PadState pad;
     padInitializeAny(&pad);
+	
+    apmInitialize();
+	appletSetAutoSleepDisabled(true);
+	appletSetCpuBoostMode(ApmCpuBoostMode_FastLoad);
+	appletSetAutoSleepTimeAndDimmingTimeEnabled(false);
+	appletSetFocusHandlingMode(AppletFocusHandlingMode_NoSuspend);
 
     // muh loooooop
     while(appletMainLoop())
@@ -223,7 +229,6 @@ int main(int argc, char **argv)
             case UP_AMS:
                 if (downloadFile(AMS_URL, TEMP_FILE, OFF))
 		        {
-					appletSetAutoSleepDisabled(true);
 					remove_entry(AMS);
 					mkdir(AMS, 0777);
 				    chdir(AMS);
@@ -249,7 +254,6 @@ int main(int argc, char **argv)
 			case UP_ENG:
                 if (downloadFile(ENG_URL, TEMP_FILE, OFF))
 		        {
-					appletSetAutoSleepDisabled(true);
                     unzip(TEMP_FILE);
 					consoleClear();
 					printDisplay("Please reboot your switch to finish the update process\n");
@@ -263,7 +267,6 @@ int main(int argc, char **argv)
             case UP_APP:
                 if (downloadFile(APP_URL, TEMP_FILE, OFF))
                 {
-					appletSetAutoSleepDisabled(true);
                     remove(APP_OUTPUT);
                     rename(TEMP_FILE, APP_OUTPUT);
                     remove(OLD_APP_PATH);
