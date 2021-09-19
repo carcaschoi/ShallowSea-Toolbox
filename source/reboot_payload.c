@@ -70,7 +70,6 @@ int reboot_payload(const char *payload)
         fclose(fp);
         reboot_to_payload();
     }
-    bpcInitialize();
     bpcRebootSystem();
     return 1;
 }

@@ -72,6 +72,7 @@ void appExit()
     socketExit();
     consoleExit(NULL);
 	appletSetAutoSleepDisabled(false);
+	bpcExit();
 }
 
 // tell the app what copyFile does
@@ -198,6 +199,7 @@ int main(int argc, char **argv)
 	appletSetCpuBoostMode(ApmCpuBoostMode_FastLoad);
 	appletSetAutoSleepTimeAndDimmingTimeEnabled(false);
 	appletSetFocusHandlingMode(AppletFocusHandlingMode_NoSuspend);
+	bpcInitialize();
 
     // muh loooooop
     while(appletMainLoop())
@@ -243,7 +245,7 @@ int main(int argc, char **argv)
 					//rename("/NSP/", "/helloworld/");
 					consoleClear();
 					printDisplay("Please reboot your switch (or launch hekate payload) to finish the update process\n");
-					//reboot_payload("sdmc:/atmosphere/reboot_payload.bin");
+					reboot_payload("sdmc:/payload.bin");
 			    }
                 else
                 {

@@ -39,14 +39,14 @@ include $(DEVKITPRO)/libnx/switch_rules
 #---------------------------------------------------------------------------------
 APP_TITLE   := 	ShallowSea-Updater
 APP_AUTHOR  := 	carcaschoi
-APP_VERSION := 	1.0.4
+APP_VERSION := 	1.0.5
 
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
 SOURCES		:=	source
 DATA		:=	data
 INCLUDES	:=	includes
-#ROMFS		:=	romfs
+ROMFS		:=	romfs
 
 #---------------------------------------------------------------------------------
 # options for code generation
