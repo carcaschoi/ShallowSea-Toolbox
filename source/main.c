@@ -247,7 +247,7 @@ int main(int argc, char **argv)
 					copyFile("/updating/config/ShallowSea-updater/hekate_ipl.ini", "/bootloader/hekate_ipl.ini");
 					//rename("/NSP/", "/helloworld/");
 					consoleClear();
-					printDisplay("Finished download and extract ShallowSea-ams\n\nNow reboot to tegraexplorer to finish the final step.")
+					printDisplay("Finished download and extract ShallowSea-ams\n\nNow reboot to tegraexplorer to finish the final step.");
 					svcSleepThread(5000000000ULL);
 					reboot_payload("romfs:/payload.bin");
 			    }
@@ -263,7 +263,7 @@ int main(int argc, char **argv)
 					appletLockExit ();
                     unzip(TEMP_FILE);
 					consoleClear();
-					printDisplay("Finished download and extract English_extra_package\n\nNow reboot the console")
+					printDisplay("Finished download and extract English_extra_package\n\nNow reboot the console");
 					svcSleepThread(5000000000ULL);
 					reboot_payload("romfs:/payload.bin");
 			    }
