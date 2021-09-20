@@ -39,7 +39,7 @@ include $(DEVKITPRO)/libnx/switch_rules
 #---------------------------------------------------------------------------------
 APP_TITLE   := 	ShallowSea-Toolbox
 APP_AUTHOR  := 	carcaschoi
-APP_VERSION := 	1.1.0
+APP_VERSION := 	1.1.1
 
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build

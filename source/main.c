@@ -24,7 +24,7 @@
 #define AMS                     "/updating/"
 //#define wait(msec) svcSleepThread(10000000 * (s64)msec)
 
-#define APP_VERSION             "1.1.0"
+#define APP_VERSION             "1.1.1"
 #define CURSOR_LIST_MAX         2
 
 const char *OPTION_LIST[] =
@@ -179,6 +179,7 @@ int main(int argc, char **argv)
 {
     // init stuff
     appInit();
+	romfsInit();
     mkdir(APP_PATH, 0777);
     
     // change directory to root (defaults to /switch/)
