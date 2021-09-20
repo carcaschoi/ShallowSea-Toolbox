@@ -73,6 +73,7 @@ void appExit()
     consoleExit(NULL);
 	appletSetAutoSleepDisabled(false);
 	bpcExit();
+	appletUnlockExit();
 }
 
 // tell the app what copyFile does
@@ -232,6 +233,7 @@ int main(int argc, char **argv)
             case UP_AMS:
                 if (downloadFile(AMS_URL, TEMP_FILE, OFF))
 		        {
+					appletLockExit ();
 					remove_entry(AMS);
 					mkdir(AMS, 0777);
 				    chdir(AMS);
@@ -245,6 +247,8 @@ int main(int argc, char **argv)
 					copyFile("/updating/config/ShallowSea-updater/hekate_ipl.ini", "/bootloader/hekate_ipl.ini");
 					//rename("/NSP/", "/helloworld/");
 					consoleClear();
+					printDisplay("Finished download and extract ShallowSea-ams\n\nNow reboot to tegraexplorer to finish the final step.")
+					svcSleepThread(5000000000ULL);
 					reboot_payload("romfs:/payload.bin");
 			    }
                 else
@@ -256,8 +260,11 @@ int main(int argc, char **argv)
 			case UP_ENG:
                 if (downloadFile(ENG_URL, TEMP_FILE, OFF))
 		        {
+					appletLockExit ();
                     unzip(TEMP_FILE);
 					consoleClear();
+					printDisplay("Finished download and extract English_extra_package\n\nNow reboot the console")
+					svcSleepThread(5000000000ULL);
 					reboot_payload("romfs:/payload.bin");
 			    }
                 else
@@ -269,11 +276,11 @@ int main(int argc, char **argv)
             case UP_APP:
                 if (downloadFile(APP_URL, TEMP_FILE, OFF))
                 {
+					appletLockExit ();
                     remove(APP_OUTPUT);
                     rename(TEMP_FILE, APP_OUTPUT);
                     remove(OLD_APP_PATH);
 		            printDisplay("Please reopen the app");
-			        break;
                 }
                 else
                 {
