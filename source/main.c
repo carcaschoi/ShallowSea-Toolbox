@@ -24,7 +24,7 @@
 #define AMS                     "/updating/"
 //#define wait(msec) svcSleepThread(10000000 * (s64)msec)
 
-#define APP_VERSION             "1.1.1"
+#define APP_VERSION             "1.1.2"
 #define CURSOR_LIST_MAX         2
 
 const char *OPTION_LIST[] =
