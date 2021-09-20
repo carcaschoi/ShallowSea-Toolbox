@@ -37,9 +37,9 @@ include $(DEVKITPRO)/libnx/switch_rules
 #   of a homebrew executable (.nro). This is intended to be used for sysmodules.
 #   NACP building is skipped as well.
 #---------------------------------------------------------------------------------
-APP_TITLE   := 	ShallowSea-Updater
+APP_TITLE   := 	ShallowSea-Toolbox
 APP_AUTHOR  := 	carcaschoi
-APP_VERSION := 	1.0.5
+APP_VERSION := 	1.1.0
 
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
