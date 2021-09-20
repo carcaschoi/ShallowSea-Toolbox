@@ -6,8 +6,8 @@ This is a toolbox for [ShallowSea](https://github.com/carcaschoi/ShallowSea)! Cu
 3. Update the app itself
 
 Todo: 
-* Auto Reboot to payload(tegraexplorer to finish the update process) # Welcome for PR, I don't know how to do
-* Disable sleep? #As soon as possible
+* Get ShallowSea version tag from github, compare?
+* Disable sleep?
 
 
 
