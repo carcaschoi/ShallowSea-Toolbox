@@ -14,6 +14,7 @@
 #include "download.h"
 #include "unzip.h"
 #include "main.h"
+#include "option.h"
 #include "reboot_payload.h"
 
 
@@ -295,9 +296,6 @@ int main(int argc, char **argv)
             case REBOOT:
                 {
 					reboot_payload("romfs:/payload.bin");
-                }
-                else
-                {
                     printDisplay("Failed to reboot console\n");
                 }
                 break;

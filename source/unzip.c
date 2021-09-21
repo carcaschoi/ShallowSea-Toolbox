@@ -5,6 +5,7 @@
 #include <switch.h>
 
 #include "unzip.h"
+#include "option.h"
 
 #define WRITEBUFFERSIZE 0x1000 // 4KiB
 #define MAXFILENAME     0x301
