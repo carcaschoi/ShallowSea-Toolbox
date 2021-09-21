@@ -280,7 +280,8 @@ int main(int argc, char **argv)
                     rename(TEMP_FILE, APP_OUTPUT);
                     remove(OLD_APP_PATH);
 		            printDisplay("Please reopen the app");
-			break;
+			//exit the app
+			appExit();
                 }
                 else
                 {
