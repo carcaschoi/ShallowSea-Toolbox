@@ -276,7 +276,6 @@ int main(int argc, char **argv)
             case UP_APP:
                 if (downloadFile(APP_URL, TEMP_FILE, OFF))
                 {
-					appletLockExit ();
                     remove(APP_OUTPUT);
                     rename(TEMP_FILE, APP_OUTPUT);
                     remove(OLD_APP_PATH);
