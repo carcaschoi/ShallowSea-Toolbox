@@ -18,14 +18,14 @@
 #include "reboot_payload.h"
 
 
-#define ROOT                    "/"
-#define APP_PATH                "/switch/ShallowSea-toolbox/"
-#define APP_OUTPUT              "/switch/ShallowSea-toolbox/ShallowSea-toolbox.nro"
-#define OLD_APP_PATH            "/switch/ShallowSea-updater/ShallowSea-updater.nro"
-#define AMS                     "/updating/"
+#define ROOT                    "sdmc:/"
+#define APP_PATH                "sdmc:/switch/ShallowSea-toolbox/"
+#define APP_OUTPUT              "sdmc:/switch/ShallowSea-toolbox/ShallowSea-toolbox.nro"
+#define OLD_APP_PATH            "sdmc:/switch/ShallowSea-updater/ShallowSea-updater.nro"
+#define AMS                     "sdmc:/updating/"
 //#define wait(msec) svcSleepThread(10000000 * (s64)msec)
 
-#define APP_VERSION             "1.1.3"
+#define APP_VERSION             "1.1.4"
 #define CURSOR_LIST_MAX         3
 
 const char *OPTION_LIST[] =
