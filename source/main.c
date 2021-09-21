@@ -25,7 +25,7 @@
 #define AMS                     "/updating/"
 //#define wait(msec) svcSleepThread(10000000 * (s64)msec)
 
-#define APP_VERSION             "1.1.2"
+#define APP_VERSION             "1.1.3"
 #define CURSOR_LIST_MAX         3
 
 const char *OPTION_LIST[] =
@@ -296,6 +296,7 @@ int main(int argc, char **argv)
             case REBOOT:
                 {
 					reboot_payload("romfs:/payload.bin");
+					svcSleepThread(5000000000ULL);
                     printDisplay("Failed to reboot console\n");
                 }
                 break;
