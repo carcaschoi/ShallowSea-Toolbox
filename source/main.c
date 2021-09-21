@@ -182,7 +182,6 @@ int main(int argc, char **argv)
 {
     // init stuff
     appInit();
-	romfsInit();
     mkdir(APP_PATH, 0777);
     
     // change directory to root (defaults to /switch/)
@@ -241,6 +240,7 @@ int main(int argc, char **argv)
 				    chdir(AMS);
                     unzip(TEMP_FILE);
 					chdir(ROOT);
+					romfsInit();
 					copyFile("/updating/config/ShallowSea-updater/startup.te", "/startup.te");
                     copyFile("romfs:/payload.bin", "/atmosphere/reboot_payload.bin");
                     copyFile("romfs:/payload.bin", "/payload.bin");
@@ -252,6 +252,7 @@ int main(int argc, char **argv)
 					printDisplay("Finished download and extract ShallowSea-ams\n\nNow reboot to tegraexplorer to finish the final step.");
 					svcSleepThread(5000000000ULL);
 					reboot_payload("romfs:/payload.bin");
+					romfsExit();
 			    }
                 else
                 {
@@ -267,7 +268,9 @@ int main(int argc, char **argv)
 					consoleClear();
 					printDisplay("Finished download and extract English_extra_package\n\nNow reboot the console");
 					svcSleepThread(5000000000ULL);
+					romfsInit();
 					reboot_payload("romfs:/payload.bin");
+					romfsExit();
 			    }
                 else
                 {
@@ -278,6 +281,7 @@ int main(int argc, char **argv)
             case UP_APP:
                 if (downloadFile(APP_URL, TEMP_FILE, OFF))
                 {
+					romfsExit();
                     remove(APP_OUTPUT);
                     rename(TEMP_FILE, APP_OUTPUT);
                     remove(OLD_APP_PATH);
@@ -295,8 +299,10 @@ int main(int argc, char **argv)
 				
             case REBOOT:
                 {
+					romfsInit();
 					reboot_payload("romfs:/payload.bin");
 					svcSleepThread(5000000000ULL);
+					romfsExit();
                     printDisplay("Failed to reboot console\n");
                 }
                 break;
