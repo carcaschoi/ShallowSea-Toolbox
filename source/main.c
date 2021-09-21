@@ -25,13 +25,14 @@
 //#define wait(msec) svcSleepThread(10000000 * (s64)msec)
 
 #define APP_VERSION             "1.1.2"
-#define CURSOR_LIST_MAX         2
+#define CURSOR_LIST_MAX         3
 
 const char *OPTION_LIST[] =
 {
     "= Update ShallowSea-ams",
 	"= Update English-extra-package",
     "= Update this app",
+	"= Reboot to payload",
 	
 };
 
@@ -288,6 +289,16 @@ int main(int argc, char **argv)
                 else
                 {
                     printDisplay("Failed to download app update\n");
+                }
+                break;
+				
+            case REBOOT:
+                {
+					reboot_payload("romfs:/payload.bin");
+                }
+                else
+                {
+                    printDisplay("Failed to reboot console\n");
                 }
                 break;
             }
