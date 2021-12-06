@@ -9,7 +9,7 @@
 #include <sys/stat.h>
 #include <poll.h> 
 #include <netinet/in.h>
-#include <jansson.h>
+//#include <jansson.h>
 
 #include "download.h"
 #include "unzip.h"
@@ -25,7 +25,7 @@
 #define AMS                     "sdmc:/updating/"
 //#define wait(msec) svcSleepThread(10000000 * (s64)msec)
 
-#define APP_VERSION             "1.1.4"
+#define APP_VERSION             "1.1.5"
 #define CURSOR_LIST_MAX         3
 
 const char *OPTION_LIST[] =
