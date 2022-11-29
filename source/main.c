@@ -25,7 +25,7 @@
 #define AMS                     "sdmc:/updating/"
 //#define wait(msec) svcSleepThread(10000000 * (s64)msec)
 
-#define APP_VERSION             "1.1.5"
+#define APP_VERSION             "1.1.6"
 #define CURSOR_LIST_MAX         3
 
 const char *OPTION_LIST[] =
